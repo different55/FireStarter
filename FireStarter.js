@@ -40,6 +40,12 @@ async function FireStarter() {
         await IOUtils.write(path, buffer);
     }
 
+    // Trigger observer to let Zen know that themes have been updated.
+    function reloadThemes() {
+        const pref = 'zen.themes.updated-value-observer';
+        Services.prefs.setBoolPref(pref, !Services.prefs.getBoolPref(pref));
+    }
+
     /******************************
      * Hardcoded files
      ******************************/
@@ -90,8 +96,6 @@ async function FireStarter() {
         return console.error("FireStarter: Error writing themes data file", e);
     }
 
-    // Trigger observer to let Zen know that themes have been updated.
-    const pref = 'zen.themes.updated-value-observer';
-    Services.prefs.setBoolPref(pref, !Services.prefs.getBoolPref(pref));
+    reloadThemes();
 }
 FireStarter();

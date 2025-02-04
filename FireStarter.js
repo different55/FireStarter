@@ -37,7 +37,8 @@ async function FireStarter() {
     const themePath = PathUtils.join(ZenThemesCommon.themesRootPath, id);
 
     var stylePath = PathUtils.join(themePath, 'chrome.css');
-    var starterStyle = `@media (-moz-bool-pref: "theme.firestarter.under_construction") {
+    var starterStyle =
+`@media (-moz-bool-pref: "theme.firestarter.under_construction") {
     #urlbar-background:before {
       content: ''; position: absolute; inset: 0;
       background: fixed repeating-linear-gradient(45deg, #0002, #0002 10px, #fff2 10px, #fff2 20px);
@@ -46,8 +47,8 @@ async function FireStarter() {
 }`;
 
     var prefPath = PathUtils.join(themePath, 'preferences.json');
-    var starterPrefs = `
-[
+    var starterPrefs =
+`[
   {
     "property": "theme.firestarter.under_construction",
     "label": "Under Construction",
@@ -57,8 +58,8 @@ async function FireStarter() {
 ]`;
 
     var readmePath = PathUtils.join(themePath, 'readme.md');
-    var starterReadme = `
-# ${name}
+    var starterReadme =
+`# ${name}
 A WIP Zen Mod.`;
 
 

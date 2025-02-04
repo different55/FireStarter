@@ -6,13 +6,9 @@ async function FireStarter() {
 
     // Adapted from downloadUrlToFile in ZenThemeMarketplaceParent.sys.mjs
     async function writeStringToFile(content, path, isStyleSheet = false) {
-        try {
-            content = isStyleSheet ? getFullStyleSheetContent(content) : content;
-            let buffer = new TextEncoder().encode(content);
-            await IOUtils.write(path, buffer);
-        } catch (e) {
-            console.error("FireStarter: Error writing file", path, e);
-        }
+        content = isStyleSheet ? getFullStyleSheetContent(content) : content;
+        let buffer = new TextEncoder().encode(content);
+        await IOUtils.write(path, buffer);
     }
 
     /******************************
@@ -60,12 +56,12 @@ A WIP Zen Mod.`;
     // Write Firestarter files.
     try {
         await IOUtils.makeDirectory(themePath, { ignoreExisting: true });
+        writeStringToFile(starterStyle, stylePath, true);
+        writeStringToFile(starterPrefs, prefPath);
+        writeStringToFile(starterReadme, readmePath);
     } catch (e) {
-        console.error("FireStarter: Error creating theme directory", themePath, e);
+        console.error("FireStarter: Error writing starter files", themePath, e);
     }
-    writeStringToFile(starterStyle, stylePath, true);
-    writeStringToFile(starterPrefs, prefPath);
-    writeStringToFile(starterReadme, readmePath);
 
     // Check if Firestarter theme is already installed.
     var themes = await ZenThemesCommon.getThemes();

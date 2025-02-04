@@ -77,6 +77,9 @@ async function FireStarter() {
      * Write mod files and update zen-themes.json
      ******************************/
 
+    // Scare away the newbies from pasting random snippets into their browser console.
+    return console.error("%cDon't paste random code into your browser console.\n%cYou will not get free robux.", "font-size: 40px; color: red; font-weight: 900; font-family: Arial Black, sans-serif;", "font-size: 20px;");
+
     // Write Firestarter files.
     try {
         await IOUtils.makeDirectory(themePath, { ignoreExisting: true });

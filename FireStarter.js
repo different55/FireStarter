@@ -78,18 +78,16 @@ async function FireStarter() {
         writeStringToFile(starterPrefs, prefPath);
         writeStringToFile(starterReadme, readmePath);
     } catch (e) {
-        console.error("FireStarter: Error writing starter files", themePath, e);
+        return console.error("FireStarter: Error writing starter files", themePath, e);
     }
 
-    // Check if Firestarter theme is already installed.
-    var themes = await ZenThemesCommon.getThemes();
-
     // Add theme to themes object and write to zen-themes.json
+    var themes = await ZenThemesCommon.getThemes();
     themes[id] = theme;
     try {
         await IOUtils.writeJSON(ZenThemesCommon.themesDataFile, themes);
     } catch (e) {
-        console.error("FireStarter: Error writing themes data file", e);
+        return console.error("FireStarter: Error writing themes data file", e);
     }
 
     // Trigger observer to let Zen know that themes have been updated.

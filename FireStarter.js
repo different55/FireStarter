@@ -5,6 +5,7 @@ async function FireStarter() {
      ******************************/
 
     // Paths
+    const id = crypto.randomUUID();
     const themePath = PathUtils.join(ZenThemesCommon.themesRootPath, id);
     const stylePath = PathUtils.join(themePath, 'chrome.css');
     const prefPath = PathUtils.join(themePath, 'preferences.json');
@@ -14,7 +15,7 @@ async function FireStarter() {
     const readmeURI = Services.io.newFileURI(new FileUtils.File(readmePath)).spec;
 
     const theme = {
-        "id": crypto.randomUUID(),
+        "id": id,
         "name": prompt("Enter the name of the theme", "Sandbox"),
         "description": "WIP Zen Mod",
         "homepage": "https://github.com/different55/FireStarter",

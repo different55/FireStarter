@@ -4,19 +4,6 @@ async function FireStarter() {
      * Function definitions
      ******************************/
 
-    // From getStyleSheetFullContent in ZenThemeMarketplaceParent.sys.mjs
-    function getFullStyleSheetContent(style = '') {
-        let stylesheet = '@-moz-document url-prefix("chrome:") {\n';
-
-        for (const line of style.split('\n')) {
-            stylesheet += `  ${line}\n`;
-        }
-
-        stylesheet += '}';
-
-        return stylesheet;
-    }
-
     // Adapted from downloadUrlToFile in ZenThemeMarketplaceParent.sys.mjs
     async function writeStringToFile(content, path, isStyleSheet = false) {
         try {
@@ -38,11 +25,13 @@ async function FireStarter() {
 
     var stylePath = PathUtils.join(themePath, 'chrome.css');
     var starterStyle =
-`@media (-moz-bool-pref: "theme.firestarter.under_construction") {
-    #urlbar-background:before {
-      content: ''; position: absolute; inset: 0;
-      background: fixed repeating-linear-gradient(45deg, #0002, #0002 10px, #fff2 10px, #fff2 20px);
-      border-radius: var(--border-radius-medium);
+`@-moz-document url-prefix("chrome:") {
+    @media (-moz-bool-pref: "theme.firestarter.under_construction") {
+        #urlbar-background:before {
+          content: ''; position: absolute; inset: 0;
+          background: fixed repeating-linear-gradient(45deg, #0002, #0002 10px, #fff2 10px, #fff2 20px);
+          border-radius: var(--border-radius-medium);
+        }
     }
 }`;
 

@@ -35,8 +35,7 @@ async function FireStarter() {
      ******************************/
 
     // Adapted from downloadUrlToFile in ZenThemeMarketplaceParent.sys.mjs
-    async function writeStringToFile(content, path, isStyleSheet = false) {
-        content = isStyleSheet ? getFullStyleSheetContent(content) : content;
+    async function writeStringToFile(content, path) {
         const buffer = new TextEncoder().encode(content);
         await IOUtils.write(path, buffer);
     }
@@ -83,8 +82,8 @@ async function FireStarter() {
 
     // Write Firestarter files.
     try {
-        await IOUtils.makeDirectory(themePath, { ignoreExisting: true });
-        writeStringToFile(starterStyle, stylePath, true);
+        await IOUtils.makeDirectory(themePath);
+        writeStringToFile(starterStyle, stylePath);
         writeStringToFile(starterPrefs, prefPath);
         writeStringToFile(starterReadme, readmePath);
     } catch (e) {

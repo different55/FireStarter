@@ -6,14 +6,14 @@ async function FireStarter() {
 
     // Paths
     const themePath = PathUtils.join(ZenThemesCommon.themesRootPath, id);
-    var stylePath = PathUtils.join(themePath, 'chrome.css');
-    var prefPath = PathUtils.join(themePath, 'preferences.json');
-    var readmePath = PathUtils.join(themePath, 'readme.md');
-    var styleURI = Services.io.newFileURI(new FileUtils.File(stylePath)).spec;
-    var prefURI = Services.io.newFileURI(new FileUtils.File(prefPath)).spec;
-    var readmeURI = Services.io.newFileURI(new FileUtils.File(readmePath)).spec;
+    const stylePath = PathUtils.join(themePath, 'chrome.css');
+    const prefPath = PathUtils.join(themePath, 'preferences.json');
+    const readmePath = PathUtils.join(themePath, 'readme.md');
+    const styleURI = Services.io.newFileURI(new FileUtils.File(stylePath)).spec;
+    const prefURI = Services.io.newFileURI(new FileUtils.File(prefPath)).spec;
+    const readmeURI = Services.io.newFileURI(new FileUtils.File(readmePath)).spec;
 
-    var theme = {
+    const theme = {
         "id": crypto.randomUUID(),
         "name": prompt("Enter the name of the theme", "Sandbox"),
         "description": "WIP Zen Mod",
@@ -36,7 +36,7 @@ async function FireStarter() {
     // Adapted from downloadUrlToFile in ZenThemeMarketplaceParent.sys.mjs
     async function writeStringToFile(content, path, isStyleSheet = false) {
         content = isStyleSheet ? getFullStyleSheetContent(content) : content;
-        let buffer = new TextEncoder().encode(content);
+        const buffer = new TextEncoder().encode(content);
         await IOUtils.write(path, buffer);
     }
 
@@ -50,7 +50,7 @@ async function FireStarter() {
      * Hardcoded files
      ******************************/
 
-    var starterStyle =
+    const starterStyle =
 `@-moz-document url-prefix("chrome:") {
     @media (-moz-bool-pref: "theme.firestarter.under_construction") {
         #urlbar-background:before {
@@ -61,7 +61,7 @@ async function FireStarter() {
     }
 }`;
 
-    var starterPrefs =
+    const starterPrefs =
 `[
   {
     "property": "theme.firestarter.under_construction",
@@ -71,7 +71,7 @@ async function FireStarter() {
   }
 ]`;
 
-    var starterReadme = `# ${theme.name}\n${theme.description}`;
+    const starterReadme = `# ${theme.name}\n${theme.description}`;
 
     /******************************
      * Write mod files and update zen-themes.json
@@ -88,7 +88,7 @@ async function FireStarter() {
     }
 
     // Add theme to themes object and write to zen-themes.json
-    var themes = await ZenThemesCommon.getThemes();
+    let themes = await ZenThemesCommon.getThemes();
     themes[id] = theme;
     try {
         await IOUtils.writeJSON(ZenThemesCommon.themesDataFile, themes);

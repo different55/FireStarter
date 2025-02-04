@@ -14,7 +14,7 @@ async function FireStarter() {
     var readmeURI = Services.io.newFileURI(new FileUtils.File(readmePath)).spec;
 
     var theme = {
-        "id": "00000000-0000-4000-8000-000000000000",
+        "id": crypto.randomUUID(),
         "name": prompt("Enter the name of the theme", "Sandbox"),
         "description": "WIP Zen Mod",
         "homepage": "https://github.com/different55/FireStarter",

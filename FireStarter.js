@@ -1,6 +1,35 @@
 async function FireStarter() {
 
     /******************************
+     * Basic info
+     ******************************/
+
+    // Paths
+    const themePath = PathUtils.join(ZenThemesCommon.themesRootPath, id);
+    var stylePath = PathUtils.join(themePath, 'chrome.css');
+    var prefPath = PathUtils.join(themePath, 'preferences.json');
+    var readmePath = PathUtils.join(themePath, 'readme.md');
+    var styleURI = Services.io.newFileURI(new FileUtils.File(stylePath)).spec;
+    var prefURI = Services.io.newFileURI(new FileUtils.File(prefPath)).spec;
+    var readmeURI = Services.io.newFileURI(new FileUtils.File(readmePath)).spec;
+
+    var theme = {
+        "id": "00000000-0000-4000-8000-000000000000",
+        "name": prompt("Enter the name of the theme", "Sandbox"),
+        "description": "WIP Zen Mod",
+        "homepage": "https://github.com/different55/FireStarter",
+        "style": styleURI,
+        "readme": prefURI,
+        "author": "you",
+        "version": "0.0.1a",
+        "tags": [],
+        "createdAt": "2025-01-01",
+        "updatedAt": "2025-01-01",
+        "preferences": readmeURI,
+        "enabled": true
+    };
+
+    /******************************
      * Function definitions
      ******************************/
 
@@ -12,14 +41,9 @@ async function FireStarter() {
     }
 
     /******************************
-     * Basic info and hardcoded files
+     * Hardcoded files
      ******************************/
 
-    var name = prompt("Enter the name of the theme", "Sandbox");
-    var id = "00000000-0000-4000-8000-000000000000";
-    const themePath = PathUtils.join(ZenThemesCommon.themesRootPath, id);
-
-    var stylePath = PathUtils.join(themePath, 'chrome.css');
     var starterStyle =
 `@-moz-document url-prefix("chrome:") {
     @media (-moz-bool-pref: "theme.firestarter.under_construction") {
@@ -31,7 +55,6 @@ async function FireStarter() {
     }
 }`;
 
-    var prefPath = PathUtils.join(themePath, 'preferences.json');
     var starterPrefs =
 `[
   {
@@ -42,16 +65,11 @@ async function FireStarter() {
   }
 ]`;
 
-    var readmePath = PathUtils.join(themePath, 'readme.md');
-    var starterReadme =
-`# ${name}
-A WIP Zen Mod.`;
-
+    var starterReadme = `# ${theme.name}\n${theme.description}`;
 
     /******************************
      * Write mod files and update zen-themes.json
      ******************************/
-
 
     // Write Firestarter files.
     try {
@@ -65,23 +83,6 @@ A WIP Zen Mod.`;
 
     // Check if Firestarter theme is already installed.
     var themes = await ZenThemesCommon.getThemes();
-
-    // Construct theme
-    var theme = {
-        "id": id,
-        "name": name,
-        "description": "WIP Zen Mod",
-        "homepage": "https://zen-browser.app/",
-        "style": Services.io.newFileURI(new FileUtils.File(stylePath)).spec,
-        "readme": Services.io.newFileURI(new FileUtils.File(readmePath)).spec,
-        "author": "you",
-        "version": "0.0.1a",
-        "tags": [],
-        "createdAt": "2025-01-01",
-        "updatedAt": "2025-01-01",
-        "preferences": Services.io.newFileURI(new FileUtils.File(prefPath)).spec,
-        "enabled": true
-    };
 
     // Add theme to themes object and write to zen-themes.json
     themes[id] = theme;
